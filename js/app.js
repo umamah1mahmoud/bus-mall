@@ -111,7 +111,8 @@ function clickHandler(event){
   if(attempts===0){
     alert('You are done! Thank you for your time')
     imagesSection.removeEventListener('click',clickHandler);
-    createChart();
+    viewResults.addEventListener('click', createList);
+    viewResults.addEventListener('click', createChart);
   }
 }
 
@@ -124,7 +125,7 @@ function randomNumber(min, max) {
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> LIST <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-viewResults.addEventListener('click', createList, clickHandler);
+
 
 function createList (event){
   let createUl= document.createElement('ul');
