@@ -30,6 +30,7 @@ const secondImage=document.getElementById('secondImage');
 const thirdImage=document.getElementById('thirdImage');
 const makeList=document.getElementById('makeList');
 const viewResults=document.getElementById('viewResults');
+let context = document.getElementById('productsChart').getContext('2d');
 
 
 function Product(name){
@@ -48,6 +49,8 @@ function Product(name){
   }
 
   Product.all.push(this);
+
+  Product.all= JSON.parse(localStorage.getItem('productsChart'));
 }
 Product.all=[];
 
@@ -56,41 +59,60 @@ for(let i=0;i<names.length;i++){
 };
 
 
+// function storeData(){
+//   let data=localStorage.getItem('productsChart');
+//   data= JSON.parse(data);
+//   return data
+// }
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> RENDER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 function render(){
   const firstIndex=randomNumber(0,Product.all.length-1);
   const firstRandomProduct=Product.all[firstIndex];
-  firstImage.src=firstRandomProduct.path;
-  firstImage.title=firstRandomProduct.name;
-  firstImage.alt=firstRandomProduct.name;
 
   const secondIndex=randomNumber(0,Product.all.length-1);
   const secondRandomProduct=Product.all[secondIndex];
-  secondImage.src=secondRandomProduct.path;
-  secondImage.title=secondRandomProduct.name;
-  secondImage.alt=secondRandomProduct.name;
 
   const thirdIndex=randomNumber(0,Product.all.length-1);
   const thirdRandomProduct=Product.all[thirdIndex];
-  thirdImage.src=thirdRandomProduct.path;
-  thirdImage.title=thirdRandomProduct.name;
-  thirdImage.alt=thirdRandomProduct.name;
 
+  if (firstIndex!== secondIndex && secondIndex!== thirdIndex && firstIndex !== thirdIndex ){
+    firstImage.src=firstRandomProduct.path;
+    firstImage.title=firstRandomProduct.name;
+    firstImage.alt=firstRandomProduct.name;
 
-  Product.all[firstIndex].views++;
-  Product.all[secondIndex].views++;
-  Product.all[thirdIndex].views++;
-  console.table(Product.all)
+    secondImage.src=secondRandomProduct.path;
+    secondImage.title=secondRandomProduct.name;
+    secondImage.alt=secondRandomProduct.name;
 
+    thirdImage.src=thirdRandomProduct.path;
+    thirdImage.title=thirdRandomProduct.name;
+    thirdImage.alt=thirdRandomProduct.name;
+
+    Product.all[firstIndex].views++;
+    Product.all[secondIndex].views++;
+    Product.all[thirdIndex].views++;
+    // console.table(Product.all)
+  }
+  
+  
 
 };
 
 
+// // 3
+
+// let preventImg1 = 'x';
+// let preventImg2 = 'y';
+// let preventImg3 = 'z';
+
+// while(img1 === preventImg1 ||  ){
+//   // call the random 
+// }
 
 
-
+// preventImg1 =  img1;
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> EVENT LISTENER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 imagesSection.addEventListener('click',clickHandler);
@@ -103,7 +125,7 @@ function clickHandler(event){
     for(let i=0;i<Product.all.length;i++){
       if (Product.all[i].name === event.target.title){
         Product.all[i].votes++;
-        console.table(Product.all[i])
+        // console.table(Product.all[i])
       }
     }
     render();
@@ -113,11 +135,33 @@ function clickHandler(event){
     imagesSection.removeEventListener('click',clickHandler);
     viewResults.addEventListener('click', createList);
     viewResults.addEventListener('click', createChart);
+    
+    localStorage.setItem('productsChart', JSON.stringify (Product.all));
+    
   }
 }
 
-// >>>>>>>>>>>>>>>>>>>>>>>>>>>> RANDOM GENERATOR <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+
+
+
+// function preventImage(event) {
+//   let targetId = event.target.id;
+//   if (attempts !== 0) {
+//     if (targetId === 'firstImage' || targetId === 'secondImage' || targetId === 'thirdImage') {
+//       let objectPrevent = event.target.getAttribute('src');
+      
+//     }
+//   } else {
+//     imagesSection.removeEventListener('click', preventImage);
+//   }
+// };
+
+
+
+
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>> RANDOM GENERATOR <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -125,38 +169,32 @@ function randomNumber(min, max) {
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> LIST <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-
-
 function createList (event){
   let createUl= document.createElement('ul');
   makeList.appendChild(createUl);
   for ( let j=0; j< Product.all.length; j++){
     let createLi= document.createElement('li');
-    createLi.textContent= Product.all[j].name + ' had ' + Product.all[j].votes + ' votes, and ' + Product.all[j].views + ' views.' ;
+    createLi.textContent= `${Product.all[j].name} had ${Product.all[j].votes} votes, and ${Product.all[j].views} views.`;
     createUl.appendChild(createLi);
-    console.log(Product.all[j]);
+    // console.log(Product.all[j]);
   };
 }
-
-
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CHART <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 function createChart(){
-  let context = document.getElementById('productsChart').getContext('2d');
   let getProductNames=[];
   let getProductVotes=[];
   let getProductViews=[];
 
-
   for(let i=0;i<Product.all.length;i++){
-    getProductNames.push(Product.all[i].name);
+    getProductNames.push(Product.all[i].name);             
   }
   for(let i=0;i<Product.all.length;i++){
-    getProductVotes.push(Product.all[i].votes);
+    getProductVotes.push(JSON.parse(localStorage.getItem("productsChart"))[i].votes);
   }
   for(let i=0;i<Product.all.length;i++){
-    getProductViews.push(Product.all[i].views);
+    getProductViews.push(JSON.parse(localStorage.getItem("productsChart"))[i].views);
   }
   
   let VoteTheme= ['rgb(163, 86, 56, 1)', 'rgb(224, 143, 98, 1)' , 'rgb(215, 199, 158, 1)', 'rgb(157, 171, 134, 1)','rgb(163, 86, 56, 1)', 'rgb(224, 143, 98, 1)' , 'rgb(215, 199, 158, 1)', 'rgb(157, 171, 134, 1)', 'rgb(163, 86, 56, 1)', 'rgb(224, 143, 98, 1)' , 'rgb(215, 199, 158, 1)', 'rgb(157, 171, 134, 1)', 'rgb(163, 86, 56, 1)', 'rgb(224, 143, 98, 1)' , 'rgb(215, 199, 158, 1)', 'rgb(157, 171, 134, 1)', 'rgb(163, 86, 56, 1)', 'rgb(224, 143, 98, 1)' , 'rgb(215, 199, 158, 1)', 'rgb(157, 171, 134, 1)'];
@@ -197,5 +235,5 @@ function createChart(){
   
 }
 
-
+imagesSection.addEventListener('click', preventImage);
 render();
