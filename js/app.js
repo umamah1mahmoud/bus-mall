@@ -145,17 +145,17 @@ function clickHandler(event){
 
 
 
-// function preventImage(event) {
-//   let targetId = event.target.id;
-//   if (attempts !== 0) {
-//     if (targetId === 'firstImage' || targetId === 'secondImage' || targetId === 'thirdImage') {
-//       let objectPrevent = event.target.getAttribute('src');
+function preventImage(event) {
+  let targetId = event.target.id;
+  if (attempts !== 0) {
+    if (targetId === 'firstImage' || targetId === 'secondImage' || targetId === 'thirdImage') {
+      let objectPrevent = event.target.getAttribute('src');
       
-//     }
-//   } else {
-//     imagesSection.removeEventListener('click', preventImage);
-//   }
-// };
+    }
+  } else {
+    imagesSection.removeEventListener('click', preventImage);
+  }
+};
 
 
 
