@@ -55,3 +55,18 @@
 //         render();
 //       }
 // }
+
+
+
+// function storingData() {   
+//   localStorage.setItem('productsChart', JSON.stringify(Product.all));
+// }
+// console.log(localStorage);
+
+// function checkAndRestore() {
+    
+//   if (localStorage.length > 0 ) { 
+//       Product.all = JSON.parse(localStorage.getItem('productsChart')); 
+//       createChart();
+//   }
+// }
