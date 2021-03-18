@@ -50,7 +50,7 @@ function Product(name){
 
   Product.all.push(this);
 
-  Product.all= JSON.parse(localStorage.getItem('productsChart'));
+
 }
 Product.all=[];
 
@@ -78,6 +78,7 @@ function render(){
   const thirdRandomProduct=Product.all[thirdIndex];
 
   if (firstIndex!== secondIndex && secondIndex!== thirdIndex && firstIndex !== thirdIndex ){
+    localStorage.setItem("productsChart",JSON.stringify(Product.all));
     firstImage.src=firstRandomProduct.path;
     firstImage.title=firstRandomProduct.name;
     firstImage.alt=firstRandomProduct.name;
@@ -237,3 +238,4 @@ function createChart(){
 
 imagesSection.addEventListener('click', preventImage);
 render();
+Product.all= JSON.parse(localStorage.getItem('productsChart'));
