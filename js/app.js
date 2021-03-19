@@ -183,6 +183,7 @@ function createList (event){
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CHART <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+Chart.defaults.global.defaultFontFamily = "'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif";
 function createChart(){
   let getProductNames=[];
   let getProductVotes=[];
